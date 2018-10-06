@@ -1,0 +1,10 @@
+.col-sm {
+    border-width: 5px;
+    border-color: dimgrey;
+    margin: 1%;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+}
