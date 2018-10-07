@@ -41,7 +41,7 @@ $("#submit-name").on("click",function(){
         alert("You are player one!");
         playerOne = $(this).val();
         clientPlayer.name = playerOne;
-        database.ref("Player One").push({
+        database.ref("PlayerOne").push({
             name: playerOne
         });
 
@@ -53,7 +53,7 @@ $("#submit-name").on("click",function(){
         alert("You are player two!");
         playerTwo = $(this).val();
         serverPlayer.name = playerTwo;
-        database.ref("Player Two").push({
+        database.ref("PlayerTwo").push({
             name: playerTwo
         });
 
