@@ -5,14 +5,16 @@ var clientPlayer = {
     selection: "",
     wins: 0,
     ties: 0,
-    losses: 0
+    losses: 0,
+    isPlayerOne: false
 }
 var serverPlayer = {
     name: "",
     selection: "",
     wins: 0,
     ties: 0,
-    losses: 0
+    losses: 0,
+    isPlayerTwo: false
 }
 var isPlayerOne = false;
 var isPlayerTwo = false;
@@ -41,26 +43,28 @@ $("#submit-name").on("click",function(){
         alert("You are player one!");
         playerOne = $(this).val();
         clientPlayer.name = playerOne;
-        database.ref("PlayerOne").push({
-            name: playerOne
-        });
 
         $("#user-name").text("");
         isPlayerOne = true;
 
         makeButtonsOne();
+        database.ref("PlayerOne").push({
+            name: playerOne,
+            isPlayerOne: true
+        });
     } else if(isPlayerTwo===false){ // --- player two info
         alert("You are player two!");
         playerTwo = $(this).val();
         serverPlayer.name = playerTwo;
-        database.ref("PlayerTwo").push({
-            name: playerTwo
-        });
 
         $("#user-name").text("");
         isPlayerTwo = true;
 
         makeButtonsTwo();
+        database.ref("PlayerTwo").push({
+            name: playerTwo,
+            isPlayerTwo: true
+        });
     }
 });
 
@@ -71,7 +75,7 @@ function makeButtonsOne() {
             var newButton = $("<button>");
             $("#player-one").append(newButton);
             newButton.text(rps[a]);
-            newButton.addClass("rps-button");
+            newButton.addClass("rps-button-one");
             newButton.attr("value",rps[a]);
         }
 
@@ -82,12 +86,12 @@ function makeButtonsOne() {
     }
 }
 function makeButtonsTwo() {
-    if(isPlayerOne===true){
+    if(isPlayerTwo===true){
         for(var a=0; a>rps.length; a++){
             var newButton = $("<button>");
             $("#player-two").append(newButton);
             newButton.text(rps[a]);
-            newButton.addClass("rps-button");
+            newButton.addClass("rps-button-two");
             newButton.attr("value",rps[a]);
         }
 
@@ -97,3 +101,20 @@ function makeButtonsTwo() {
         newStats.text("Wins: "+serverPlayer.wins+" Ties: "+serverPlayer.ties+" Losses: "+serverPlayer.losses);
     }
 }
+
+// --- --- --- grab button info --- --- ---
+$(".rps-button-one").on("click",function(){
+    if(readyOne===false){
+        clientPlayer.selection = $(this).attr("value");
+        alert(clientPlayer.name + " has selected");
+        readyOne = true;
+    }
+});
+$(".rps-button-two").on("click",function(){
+    if(readyTwo===false){
+        serverPlayer.selection = $(this).attr("value");
+        alert(serverPlayer.name + " has selected");
+        readyTwo = true;
+    }
+});
+
