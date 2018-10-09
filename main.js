@@ -108,6 +108,8 @@ $(".rps-button-one").on("click",function(){
         clientPlayer.selection = $(this).attr("value");
         alert(clientPlayer.name + " has selected");
         readyOne = true;
+
+        checkInfo();
     }
 });
 $(".rps-button-two").on("click",function(){
@@ -115,6 +117,8 @@ $(".rps-button-two").on("click",function(){
         serverPlayer.selection = $(this).attr("value");
         alert(serverPlayer.name + " has selected");
         readyTwo = true;
+
+        checkInfo();
     }
 });
 
@@ -142,6 +146,8 @@ function compareInfo(playerOneSelection,playerTwoSelection){
         clientPlayer.losses++;
         serverPlayer.wins++;
     }
+
+    updateData();
 }
 
 function updateData(){
@@ -155,4 +161,13 @@ function updateData(){
         losses: serverPlayer.losses,
         ties: serverPlayer.ties
     });
+}
+
+function checkInfo(){
+    if(readyOne==true&&readyTwo==true){
+        compareInfo(serverPlayer.selection,clientPlayer.selection);
+
+        readyOne = false;
+        readyTwo = false;
+    }
 }
