@@ -118,3 +118,41 @@ $(".rps-button-two").on("click",function(){
     }
 });
 
+// --- --- --- compare gathered info --- --- ---
+function compareInfo(playerOneSelection,playerTwoSelection){
+    if(playerOneSelection===playerTwoSelection){
+        clientPlayer.ties++;
+        serverPlayer.ties++;
+    }  else if(playerOneSelection=="rock"&&playerTwoSelection=="scissor"){
+        clientPlayer.wins++;
+        serverPlayer.losses++;
+    } else if(playerOneSelection=="paper"&&playerTwoSelection=="rock"){
+        clientPlayer.wins++;
+        serverPlayer.losses++;
+    } else if(playerOneSelection=="scissors"&&playerTwoSelection=="rock"){
+        clientPlayer.wins++;
+        serverPlayer.losses++;
+    } else if(playerTwoSelection=="rock"&&playerOneSelection=="scissor"){
+        clientPlayer.losses++;
+        serverPlayer.wins++;
+    } else if(playerTwoSelection=="paper"&&playerOneSelection=="rock"){
+        clientPlayer.losses++;
+        serverPlayer.wins++;
+    } else if(playerTwoSelectionn=="scissors"&&playerOneSelection=="rock"){
+        clientPlayer.losses++;
+        serverPlayer.wins++;
+    }
+}
+
+function updateData(){
+    database.ref("PlayerOne").push({
+        wins: clientPlayer.wins,
+        losses: clientPlayer.losses,
+        ties: clientPlayer.ties
+    });
+    database.ref("PlayerTwo").push({
+        wins: serverPlayer.wins,
+        losses: serverPlayer.losses,
+        ties: serverPlayer.ties
+    });
+}
